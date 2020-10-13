@@ -35,7 +35,7 @@ class PageBuffer:
                 for (func, flg) in rules.items():
                     if func(line):
                         line.flags = flg
-                yield page_index, line_index, line.text
+                yield page_index, line_index, line
 
     def create_json(self):
         return json.dumps(self.__dict__, indent=2)
@@ -64,13 +64,13 @@ class FlaggedPageLine:
         if flag not in self.buffer.occurrences:
             return False
         o = self.buffer.occurrences[flag]
-        return o[0] > self.pin or o[1] > self.lin
+        return self.pin > o[0] or self.lin > o[1]
 
     def __lt__(self, flag):
         if flag not in self.buffer.occurrences:
             return False
         o = self.buffer.occurrences[flag]
-        return o[0] < self.pin or o[1] < self.lin
+        return o[0] > self.pin or o[1] > self.lin
 
 
 class PageBufferFromJSON(PageBuffer):

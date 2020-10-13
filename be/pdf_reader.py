@@ -58,8 +58,6 @@ class FlaggedPageLine:
         for f in set(new_flags):
             if f not in self._flags:
                 self._flags.append(f)
-                if f not in self.buffer.occurrences:
-                    self.buffer.occurrences[f] = []
                 self.buffer.occurrences[f] = (self.pin, self.lin)
 
     def __gt__(self, flag):

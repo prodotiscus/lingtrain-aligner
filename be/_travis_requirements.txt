@@ -1,0 +1,4 @@
+-i https://pypi.org/simple
+
+pdfminer.six==20200726
+PyPDF2==1.26.0

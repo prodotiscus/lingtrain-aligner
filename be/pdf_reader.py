@@ -47,6 +47,7 @@ class FlaggedPageLine:
         self.buffer = buffer
         self.pin = pin
         self.lin = lin
+        self.subflags = []
         self._flags = []
 
     @property
@@ -58,6 +59,9 @@ class FlaggedPageLine:
         for f in set(new_flags):
             if f not in self._flags:
                 self._flags.append(f)
+                for subflag in f.split("."):
+                    if subflag not in self.subflags:
+                        self.subflags.append(subflag)
                 self.buffer.occurrences[f] = (self.pin, self.lin)
 
     def __gt__(self, flag):
@@ -70,7 +74,7 @@ class FlaggedPageLine:
         if flag not in self.buffer.occurrences:
             return False
         o = self.buffer.occurrences[flag]
-        return o[0] > self.pin or o[1] > self.lin
+        return self.pin < o[0] or self.lin < o[1]
 
 
 class PageBufferFromJSON(PageBuffer):

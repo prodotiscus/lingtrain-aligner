@@ -1,10 +1,6 @@
 from be.pdf_reader import *
-import os
 import PyPDF2
-
-
-def t(path):
-    return os.path.join("tests", path)
+from . import t
 
 
 def test_main():
